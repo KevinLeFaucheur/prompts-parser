@@ -1,5 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
+import { Widgets } from '../layout/Widgets';
 
 const PromptWrapper = styled.div`
   display: flex;
@@ -8,30 +9,28 @@ const PromptWrapper = styled.div`
 
 export const Prompt = () => {
   const textareaRef = useRef('');
-  const widgetsRef = useRef('');
+  const [prompts, setPrompts] = useState([]);
 
   const handlePrompt = (prompt) => {
     console.log(prompt.split(','));
 
     if(prompt.slice(-1) === ',') {
       const prompts = prompt.split(',');
-
-      widgetsRef.current.innerHTML = '';
+      const newPrompts = [];
 
       prompts.forEach(prompt => {
         const newPrompt = prompt.trim();
-        if(newPrompt === '') return;
-        
-        const newButton = document.createElement('button');
-        newButton.innerText = newPrompt;
-        widgetsRef.current.append(newButton);
+        if(newPrompt !== '') newPrompts.push(prompt);
       });
+      setPrompts(newPrompts);
     }
   }
 
   return (
     <PromptWrapper>
-      <div ref={widgetsRef}></div>
+
+      <Widgets prompts={prompts} />
+
       <label htmlFor="positive">Prompts</label>
       <textarea 
         id="positive" name="positive" 
@@ -41,6 +40,7 @@ export const Prompt = () => {
         onChange={(event) => handlePrompt(event.target.value)}
       >
       </textarea>
+
     </PromptWrapper>
   )
 }
