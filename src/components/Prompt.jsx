@@ -34,9 +34,10 @@ export const Prompt = () => {
       <label htmlFor="positive">Prompts</label>
       <textarea 
         id="positive" name="positive" 
-        rows={5} cols={150} 
+        rows={5} cols={100} 
         placeholder="Enter prompts"
         ref={textareaRef}
+        style={{ resize: 'none' }}
         onChange={(event) => handlePrompt(event.target.value)}
       >
       </textarea>
