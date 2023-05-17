@@ -9,12 +9,14 @@ const WidgetsWrapper = styled.div`
 
 export const Widgets = ({ prompts }) => {
 
+  console.log(prompts);
+
   // useEffect(() => {
 
   // }, [prompts])
 
   return (
-    <WidgetsWrapper>
+    <WidgetsWrapper className='widget__container'>
       {prompts 
       ? 
       prompts.map((prompt, index) => {

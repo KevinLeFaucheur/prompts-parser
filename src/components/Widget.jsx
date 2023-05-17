@@ -63,7 +63,7 @@ export const Widget = ({ prompt }) => {
     <Button backgroundColor={categoryColor}>
       <div className='widget__header' onClick={handleIsOpen}>
         <i className="fa-solid fa-angle-up" />
-        <p>{prompt}</p>
+        <p>{prompt?.prompt}</p>
         <button className="fa-solid fa-xmark" />
       </div>
       {isOpen ?

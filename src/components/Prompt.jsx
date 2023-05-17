@@ -1,6 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Widgets } from '../layout/Widgets';
+import { Controller } from './Controller';
+import { PromptContext } from '../App';
 
 const PromptWrapper = styled.div`
   display: flex;
@@ -10,9 +12,9 @@ const PromptWrapper = styled.div`
 export const Prompt = () => {
   const textareaRef = useRef('');
   const [prompts, setPrompts] = useState([]);
+  const { prompt, setPrompt } = useContext(PromptContext);
 
   const handlePrompt = (prompt) => {
-    console.log(prompt.split(','));
 
     if(prompt.slice(-1) === ',') {
       const prompts = prompt.split(',');
@@ -20,14 +22,21 @@ export const Prompt = () => {
 
       prompts.forEach(prompt => {
         const newPrompt = prompt.trim();
-        if(newPrompt !== '') newPrompts.push(prompt);
+        if(newPrompt !== '') newPrompts.push({ prompt, weight: 1, color: '#9EE' });
       });
+
+      console.log(newPrompts);
+
       setPrompts(newPrompts);
+
+      setPrompt(newPrompts);
     }
   }
 
   return (
     <PromptWrapper>
+
+      <Controller />
 
       <Widgets prompts={prompts} />
 
