@@ -1,22 +1,36 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import styled from 'styled-components';
 import { PromptContext } from '../App';
+import { validatePrompt } from '../utils';
 
 const Wrapper = styled.div`
   background-color: #EEE;
   border-radius: 5px;
   padding: 10px;
+  margin-bottom: 1rem;
+
+  button {
+    width: 150px;
+    padding: 5px 10px;
+  }
 `
 
 export const Controller = () => {
-  const { prompt, setPrompt } = useContext(PromptContext);
-  console.log(prompt);
-
-  const widgets = document.querySelector('.widget__container');
+  const { prompts, setPrompts } = useContext(PromptContext);
+  const promptRef = useRef('');
+  const weightRef = useRef('');
+  const colorRef = useRef('');
 
   const addWidget = () => {
-    // currentPrompt.push({ prompt: '', weight: '', color: '' });
-    // setCurrentPrompt(currentPrompt);
+
+    const newPrompts = [...prompts, 
+      validatePrompt({
+        prompt: promptRef.current.value, 
+        weight: weightRef.current.value, 
+        color: colorRef.current.value })
+    ];
+
+    setPrompts(newPrompts);
   }
 
   return (
@@ -25,17 +39,17 @@ export const Controller = () => {
       <div>
         <div>
           <label>Prompt: </label>
-          <input type='text'/>
+          <input type='text' ref={promptRef}/>
         </div> 
         <div>
           <label>Weight: </label>
-          <input type="range" min={0} max={10} step={0.1} />
+          <input type="range" ref={weightRef} min={0} max={10} step={0.1} />
         </div>
         <div>
           <label>Color: </label>
-          <input type="color" />
+          <input type="color" ref={colorRef} />
         </div>
-        <button onClick={addWidget} >Add</button>
+        <button onClick={() => addWidget()} >Add</button>
       </div>
     </Wrapper>
   )

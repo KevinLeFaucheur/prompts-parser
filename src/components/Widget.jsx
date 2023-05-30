@@ -45,10 +45,11 @@ const Option = styled.div`
   justify-content: space-between;
 `
 
-export const Widget = ({ prompt }) => {
+export const Widget = ({ promptData }) => {
   const [isOpen, setIsOpen] = useState();
   const [categoryColor, setCategoryColor] = useState('#eee');
 
+  const { prompt, weight, color } = promptData;
 
   const handleIsOpen = () => {
     setIsOpen(!isOpen);
@@ -60,16 +61,16 @@ export const Widget = ({ prompt }) => {
   }
 
   return (
-    <Button backgroundColor={categoryColor}>
+    <Button backgroundColor={color}>
       <div className='widget__header' onClick={handleIsOpen}>
         <i className="fa-solid fa-angle-up" />
-        <p>{prompt?.prompt}</p>
+        <p>{prompt}</p>
         <button className="fa-solid fa-xmark" />
       </div>
       {isOpen ?
       <div className='widget__body'>
-        <Option><p>Weight:</p><input type="range" min={0} max={10} step={0.1} /></Option>
-        <Option><p>Color:</p><input type="color" onBlur={(event) => handleColor(event.target.value)} /></Option>
+        <Option><p>Weight:</p><input defaultValue={weight} type="range" min={0} max={10} step={0.1} /></Option>
+        <Option><p>Color:</p><input defaultValue={color} type="color" onBlur={(event) => handleColor(event.target.value)} /></Option>
       </div> : ''}
     </Button>
   )

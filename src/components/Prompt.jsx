@@ -1,8 +1,9 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef } from 'react';
 import styled from 'styled-components';
 import { Widgets } from '../layout/Widgets';
 import { Controller } from './Controller';
 import { PromptContext } from '../App';
+import { promptParser, validatePrompt } from '../utils';
 
 const PromptWrapper = styled.div`
   display: flex;
@@ -11,34 +12,22 @@ const PromptWrapper = styled.div`
 
 export const Prompt = () => {
   const textareaRef = useRef('');
-  const [prompts, setPrompts] = useState([]);
-  const { prompt, setPrompt } = useContext(PromptContext);
+  const { prompts, setPrompts } = useContext(PromptContext);
 
-  const handlePrompt = (prompt) => {
+  const handlePrompt = () => {
+    const prompt = document.getElementById('positive').value;
 
-    if(prompt.slice(-1) === ',') {
-      const prompts = prompt.split(',');
-      const newPrompts = [];
-
-      prompts.forEach(prompt => {
-        const newPrompt = prompt.trim();
-        if(newPrompt !== '') newPrompts.push({ prompt, weight: 1, color: '#9EE' });
-      });
-
-      console.log(newPrompts);
-
-      setPrompts(newPrompts);
-
-      setPrompt(newPrompts);
+    if(validatePrompt(prompt)) {
+      setPrompts(promptParser(prompt));
     }
-  }
+  };
 
   return (
     <PromptWrapper>
 
       <Controller />
 
-      <Widgets prompts={prompts} />
+      <Widgets />
 
       <label htmlFor="positive">Prompts</label>
       <textarea 
@@ -47,9 +36,10 @@ export const Prompt = () => {
         placeholder="Enter prompts"
         ref={textareaRef}
         style={{ resize: 'none' }}
-        onChange={(event) => handlePrompt(event.target.value)}
       >
       </textarea>
+
+      <button onClick={handlePrompt}>Generate</button>
 
     </PromptWrapper>
   )

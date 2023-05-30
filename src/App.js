@@ -1,6 +1,5 @@
 import { createContext, useState } from "react";
 import { Prompt } from "./components/Prompt";
-import { Widgets } from "./layout/Widgets";
 import styled from "styled-components";
 
 const Main = styled.main`
@@ -10,19 +9,16 @@ const Main = styled.main`
 export const PromptContext = createContext(null);
 
 const App = () => {
-  const [prompt, setPrompt] = useState([]);
+  const [prompts, setPrompts] = useState([]);
 
   return (
     <div className="App">
       <div className="prompts-buttons"></div>
       <Main>
 
-        <PromptContext.Provider value={{ prompt, setPrompt }}>
-          <Widgets></Widgets>
+        <PromptContext.Provider value={{ prompts, setPrompts }}>
           <Prompt></Prompt>
-
-        {/* <Widgets></Widgets>
-        <Prompt></Prompt> */}
+        {/*<Prompt></Prompt> */}
         
         </PromptContext.Provider>
 
