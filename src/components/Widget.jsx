@@ -69,7 +69,7 @@ export const Widget = ({ promptData }) => {
       </div>
       {isOpen ?
       <div className='widget__body'>
-        <Option><p>Weight:</p><input defaultValue={weight} type="range" min={0} max={10} step={0.1} /></Option>
+        <Option><p>Weight: {weight}</p><input defaultValue={weight} type="range" min={0} max={10} step={0.1} /></Option>
         <Option><p>Color:</p><input defaultValue={color} type="color" onBlur={(event) => handleColor(event.target.value)} /></Option>
       </div> : ''}
     </Button>
