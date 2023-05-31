@@ -16,6 +16,8 @@ export const promptParser = (prompt) => {
       weight /= 1.1;
     }
 
+    newKeyword = newKeyword.replace(/(\()|(\))|(\[)|(\])/g, '');
+
     // Checks for a weight
     const weightedKeyword = keyword.split(':');
 
