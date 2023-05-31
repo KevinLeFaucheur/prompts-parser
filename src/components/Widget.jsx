@@ -45,6 +45,13 @@ const Option = styled.div`
   justify-content: space-between;
 `
 
+const Separator = styled.div`
+  height: 1px;
+  width: 100%;
+  background-color: black;
+  margin: 10px 0;
+`
+
 export const Widget = ({ promptData }) => {
   const [isOpen, setIsOpen] = useState();
   const [categoryColor, setCategoryColor] = useState('#eee');
@@ -69,6 +76,7 @@ export const Widget = ({ promptData }) => {
       </div>
       {isOpen ?
       <div className='widget__body'>
+        <Separator />
         <Option><p>Weight: {weight}</p><input defaultValue={weight} type="range" min={0} max={10} step={0.1} /></Option>
         <Option><p>Color:</p><input defaultValue={color} type="color" onBlur={(event) => handleColor(event.target.value)} /></Option>
       </div> : ''}
