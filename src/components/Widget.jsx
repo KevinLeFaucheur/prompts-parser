@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Swatch } from './Swatch';
 
@@ -55,7 +55,7 @@ const Separator = styled.div`
 
 const SwatchButton = styled.button`
   width: 2rem;
-  height: 1rem;
+  height: 2rem;
   background-color: white;
   border: none;
   border-radius: 5px;
@@ -65,6 +65,8 @@ export const Widget = ({ promptData }) => {
   const [isOpen, setIsOpen] = useState();
   const [isSwatchOpen, setIsSwatchOpen] = useState();
   const [categoryColor, setCategoryColor] = useState('#eee');
+
+  const colorRef = useRef('');
 
   const { prompt, weight, color } = promptData;
 
@@ -78,7 +80,7 @@ export const Widget = ({ promptData }) => {
   }
 
   return (
-    <Wrapper backgroundColor={color}>
+    <Wrapper ref={colorRef} backgroundColor={color}>
       <div className='widget__header' onClick={handleIsOpen}>
         <i className="fa-solid fa-angle-up" />
         <p>{prompt}</p>
@@ -88,7 +90,7 @@ export const Widget = ({ promptData }) => {
       <div className='widget__body'>
         <Separator />
         <Option><p>Weight: {weight}</p><input defaultValue={weight} type="range" min={0} max={10} step={0.1} /></Option>
-        <Option><p>Color:</p><SwatchButton onClick={() => setIsSwatchOpen(!isSwatchOpen)} /><Swatch open={isSwatchOpen}/></Option>
+        <Option><p>Color:</p><SwatchButton onClick={() => setIsSwatchOpen(!isSwatchOpen)} /><Swatch colorRef={colorRef} open={isSwatchOpen}/></Option>
         {/* <Option><p>Color:</p><input defaultValue={color} type="color" onBlur={(event) => handleColor(event.target.value)} /></Option> */}
       </div> : ''}
     </Wrapper>

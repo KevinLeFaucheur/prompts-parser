@@ -2,9 +2,9 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 
 const colors = [
-  "#b46b3c", "#ac5b27", "#794044", "#092c86", 
-  "#2acaea", "#20daa5", "#245923", "#b0e0e6",
-  "#c6e2ff", "#f0f8ff", "#1c1c1c", "#666666"
+  "#ffe3d1", "#ffbe95", "#dda3a7", "#7792d6", 
+  "#2acaea", "#20daa5", "#77d375", "#b0e0e6",
+  "#c6e2ff", "#f0f8ff", "#cecece", "#bfaee6"
 ];
 
 const Dialog = styled.dialog`
@@ -41,8 +41,12 @@ const Color = styled.div`
   width: 20px;
 `
 
-export const Swatch = ({ open }) => {  
+export const Swatch = ({ colorRef, open }) => {  
   const dialog = useRef('');
+
+  const onColorSelect = (color) => {
+    colorRef.current.style.backgroundColor = color;
+  }
   
   // document
   // .querySelectorAll(``)
@@ -63,7 +67,7 @@ export const Swatch = ({ open }) => {
       </Header>
       <Button onClick={(e) => e.target.parentElement.close()}>x</Button>
       <Palette>
-        {colors.map(color => <Color key={color} style={{ backgroundColor: `${color}` }}>&nbsp;</Color> )}
+        {colors.map(color => <Color onClick={() => onColorSelect(color)} key={color} style={{ backgroundColor: `${color}` }}>&nbsp;</Color> )}
       </Palette>
     </Dialog>
   )

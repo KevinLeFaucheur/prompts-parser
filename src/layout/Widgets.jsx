@@ -6,6 +6,7 @@ import { PromptContext } from '../App';
 const WidgetsWrapper = styled.div`
   display: flex;
   min-height: 55px;
+  margin: 1rem 0;
 ` 
 
 export const Widgets = () => {
