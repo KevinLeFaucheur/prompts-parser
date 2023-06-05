@@ -39,8 +39,7 @@ const Button = styled.button`
   height: 1.1rem;
   width: 1.1rem;
   border: none;
-  border-radius: 3px;
-  background-color: ${ props => props.backgroundColor };
+  background: transparent;
 
   text-align: center; 
   vertical-align: middle;
@@ -88,7 +87,7 @@ export const Swatch = ({ colorRef, open, backgroundColor }) => {
       <Header>
         <p>Colors:</p>
       </Header>
-      <Button onClick={(e) => e.target.parentElement.close()} backgroundColor={swatchColor}>x</Button>
+      <Button className="fa-solid fa-angle-left" onClick={(e) => e.target.parentElement.close()} backgroundColor={swatchColor} />
       <Palette>
         {colors.map(color => <Color onClick={() => onColorSelect(color)} key={color} style={{ backgroundColor: `${color}` }}>&nbsp;</Color> )}
       </Palette>

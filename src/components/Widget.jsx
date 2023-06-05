@@ -74,6 +74,7 @@ export const Widget = ({ promptData }) => {
   const colorRef = useRef('');
 
   const { prompt, weight, color } = promptData;
+  const [weightInput, setWeightInput] = useState(weight);
 
   const handleIsOpen = () => {
     setIsOpen(!isOpen);
@@ -82,6 +83,13 @@ export const Widget = ({ promptData }) => {
 
   const handleColor = (value) => {
     setCategoryColor(value);
+  }
+
+  const handleWeight = (e) => {
+    const value = e.target.value;
+    let nonLinearWeight;
+    nonLinearWeight = (Math.pow(value, 2) / 10).toFixed(2);
+    setWeightInput(nonLinearWeight);
   }
 
   return (
@@ -95,7 +103,7 @@ export const Widget = ({ promptData }) => {
         {isOpen ?
         <div className='widget__body'>
           <Separator />
-          <Option><p>Weight: {weight}</p><input defaultValue={weight} type="range" min={0} max={10} step={0.1} /></Option>
+          <Option><p>Weight: {weightInput}</p><input onChange={handleWeight} defaultValue={weightInput} type="range" min={0} max={10} step={0.1} /></Option>
           <Option><p>Color:</p><SwatchButton onClick={() => setIsSwatchOpen(!isSwatchOpen)} /></Option>
           {/* <Option><p>Color:</p><input defaultValue={color} type="color" onBlur={(event) => handleColor(event.target.value)} /></Option> */}
         </div> : ''}
