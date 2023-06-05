@@ -4,7 +4,6 @@ import { Swatch } from './Swatch';
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   background-color: ${props => props.backgroundColor};
@@ -41,6 +40,11 @@ const Wrapper = styled.div`
   }
 `
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
 const Option = styled.div`
   display: flex;
   justify-content: space-between;
@@ -51,6 +55,7 @@ const Separator = styled.div`
   width: 100%;
   background-color: black;
   margin: 10px 0;
+  opacity: 0.2;
 `
 
 const SwatchButton = styled.button`
@@ -81,18 +86,21 @@ export const Widget = ({ promptData }) => {
 
   return (
     <Wrapper ref={colorRef} backgroundColor={color}>
-      <div className='widget__header' onClick={handleIsOpen}>
-        <i className="fa-solid fa-angle-up" />
-        <p>{prompt}</p>
-        <button className="widget--close fa-solid fa-xmark" />
-      </div>
-      {isOpen ?
-      <div className='widget__body'>
-        <Separator />
-        <Option><p>Weight: {weight}</p><input defaultValue={weight} type="range" min={0} max={10} step={0.1} /></Option>
-        <Option><p>Color:</p><SwatchButton onClick={() => setIsSwatchOpen(!isSwatchOpen)} /><Swatch colorRef={colorRef} open={isSwatchOpen}/></Option>
-        {/* <Option><p>Color:</p><input defaultValue={color} type="color" onBlur={(event) => handleColor(event.target.value)} /></Option> */}
-      </div> : ''}
+      <Container>
+        <div className='widget__header' onClick={handleIsOpen}>
+          <i className="fa-solid fa-angle-up" />
+          <p>{prompt}</p>
+          <button className="widget--close fa-solid fa-xmark" />
+        </div>
+        {isOpen ?
+        <div className='widget__body'>
+          <Separator />
+          <Option><p>Weight: {weight}</p><input defaultValue={weight} type="range" min={0} max={10} step={0.1} /></Option>
+          <Option><p>Color:</p><SwatchButton onClick={() => setIsSwatchOpen(!isSwatchOpen)} /></Option>
+          {/* <Option><p>Color:</p><input defaultValue={color} type="color" onBlur={(event) => handleColor(event.target.value)} /></Option> */}
+        </div> : ''}
+      </Container>
+      <Swatch colorRef={colorRef} open={isSwatchOpen} backgroundColor={color}/>
     </Wrapper>
   )
 }

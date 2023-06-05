@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import { darken, lighten } from 'polished';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 
 const colors = [
@@ -8,22 +9,42 @@ const colors = [
 ];
 
 const Dialog = styled.dialog`
+  position: relative;
   width: 140px;
+  height: 100%;
   padding: 10px;
+  margin: 0;
+  margin-left: 1rem;
   border: none;
   border-radius: 5px;
-  background-color: lightcyan;
+  background-color: ${ props => lighten(0.1, props.backgroundColor) };
+  animation: slide-out 0.35s ease-out;
+
+  @keyframes slide-out {
+    from {
+      transform: translate(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translate(0);
+      opacity: 1;
+    }
+  }
 `
 
 const Button = styled.button`
   position: absolute;
-  top: 5px;
-  right: 5px;
-  height: 1.5rem;
-  width: 1.5rem;
+  top: 10px;
+  right: 10px;
+  height: 1.1rem;
+  width: 1.1rem;
   border: none;
-  border-radius: 5px;
-  background-color: lightblue;
+  border-radius: 3px;
+  background-color: ${ props => props.backgroundColor };
+
+  text-align: center; 
+  vertical-align: middle;
+  padding: 0;
 `
 
 const Header = styled.div`
@@ -41,11 +62,13 @@ const Color = styled.div`
   width: 20px;
 `
 
-export const Swatch = ({ colorRef, open }) => {  
+export const Swatch = ({ colorRef, open, backgroundColor }) => {  
   const dialog = useRef('');
+  const [swatchColor, setSwatchColor] = useState(backgroundColor);
 
   const onColorSelect = (color) => {
     colorRef.current.style.backgroundColor = color;
+    setSwatchColor(color);
   }
   
   // document
@@ -61,11 +84,11 @@ export const Swatch = ({ colorRef, open }) => {
   // document.querySelector('.close').onclick = () => document.querySelector(``).close();
 
   return (
-    <Dialog ref={dialog} open={open}>
+    <Dialog ref={dialog} open={open} backgroundColor={swatchColor}>
       <Header>
         <p>Colors:</p>
       </Header>
-      <Button onClick={(e) => e.target.parentElement.close()}>x</Button>
+      <Button onClick={(e) => e.target.parentElement.close()} backgroundColor={swatchColor}>x</Button>
       <Palette>
         {colors.map(color => <Color onClick={() => onColorSelect(color)} key={color} style={{ backgroundColor: `${color}` }}>&nbsp;</Color> )}
       </Palette>
