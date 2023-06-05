@@ -1,12 +1,7 @@
-import { darken, lighten } from 'polished';
+import { lighten } from 'polished';
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
-
-const colors = [
-  "#ffe3d1", "#ffbe95", "#dda3a7", "#7792d6", 
-  "#2acaea", "#20daa5", "#77d375", "#b0e0e6",
-  "#c6e2ff", "#f0f8ff", "#cecece", "#bfaee6"
-];
+import { colors } from '../utils';
 
 const Dialog = styled.dialog`
   position: relative;
