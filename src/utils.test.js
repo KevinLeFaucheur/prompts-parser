@@ -1,9 +1,8 @@
+// import { promptParser } from "./utils";
+
 import { promptParser } from "./utils";
 
-
-// describe('', () => {
-//   it('should first', () => { 
-//     expect().toBe();
-//   });
-// })
+it('should return an array of objects', () => { 
+  expect(promptParser('hair')).toStrictEqual ([{ prompt:'hair' }]);
+});
   

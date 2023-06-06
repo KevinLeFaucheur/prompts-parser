@@ -17,9 +17,7 @@ export const Prompt = () => {
   const handlePrompt = () => {
     const prompt = document.getElementById('positive').value;
 
-    if(validatePrompt(prompt)) {
-      setPrompts(promptParser(prompt));
-    }
+    setPrompts(promptParser(prompt));
   };
 
   return (
