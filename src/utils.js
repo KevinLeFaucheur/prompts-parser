@@ -4,12 +4,21 @@ export const promptParser = (prompts) => {
   let weight = 1;
 
   return keywords.map(keyword => { 
+    
+    let parenthesisCount = (keyword.match(/\(/g) || []).length; // match returns null with no result, || []
+    for (let i = 1; i <= parenthesisCount; i++) {
+      weight *= 1.1;
+    }
+
+    keyword = keyword.replace(/(\()|(\))/g, '');
+
     let weightedWord = keyword.split(':');
 
     prompt = weightedWord[0].trim();
-    weight = weightedWord[1] ? parseFloat(weightedWord[1]) : 1;
+    weight = weightedWord[1] ? parseFloat(weightedWord[1]) : weight;
+    weight = weight % 1 !== 0 ? parseFloat(weight.toFixed(2)) : weight;
 
-    return { prompt: prompt, weight: weight } 
+    return { prompt: prompt, weight: weight, color: '#FFF' } 
   });
 }
 
