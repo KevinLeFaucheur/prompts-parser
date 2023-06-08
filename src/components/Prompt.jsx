@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Widgets } from '../layout/Widgets';
 import { Controller } from './Controller';
 import { PromptContext } from '../App';
-import { promptParser, validatePrompt } from '../utils';
+import { promptParser, randomColor, validatePrompt } from '../utils';
 
 const PromptWrapper = styled.div`
   display: flex;
@@ -17,7 +17,10 @@ export const Prompt = () => {
   const handlePrompt = () => {
     const prompt = document.getElementById('positive').value;
 
-    setPrompts(promptParser(prompt));
+    const promptList = promptParser(prompt);
+    promptList.forEach(keyword => keyword.color = randomColor())
+
+    setPrompts(promptList);
   };
 
   return (

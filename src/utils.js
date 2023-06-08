@@ -22,12 +22,16 @@ export const promptParser = (prompts) => {
     weight = weightedWord[1] ? parseFloat(weightedWord[1]) : weight;
     weight = weight % 1 !== 0 ? parseFloat(weight.toFixed(2)) : weight;
 
-    return { prompt: prompt, weight: weight, color: '#FFF' } 
+    return { prompt: prompt, weight: weight, color: '#9FF' } 
   });
 }
 
 export const validatePrompt = (prompt) => {
   return !(prompt === '');
+}
+
+export const randomColor = () => {
+  return colors[Math.floor(Math.random() * colors.length)];
 }
 
 export const colors = [
