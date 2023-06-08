@@ -9,8 +9,12 @@ export const promptParser = (prompts) => {
     for (let i = 1; i <= parenthesisCount; i++) {
       weight *= 1.1;
     }
+    let bracketsCount = (keyword.match(/\[/g) || []).length;
+    for (let i = 1; i <= bracketsCount; i++) {
+      weight /= 1.1;
+    }
 
-    keyword = keyword.replace(/(\()|(\))/g, '');
+    keyword = keyword.replace(/(\()|(\))|(\[)|(\])/g, '');
 
     let weightedWord = keyword.split(':');
 

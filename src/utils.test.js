@@ -20,7 +20,8 @@ it('should catch parenthesis and calculate a weight', () => {
 
 // Recognize brackets
 it('should catch brackets and calculate a weight', () => { 
-
+  expect(promptParser('[hair]')).toStrictEqual([{ prompt:'hair', weight: 0.91, color: '#FFF' }]);
+  expect(promptParser('[[hair]]')).toStrictEqual([{ prompt:'hair', weight: 0.83, color: '#FFF' }]);
 });
 
 /** 
