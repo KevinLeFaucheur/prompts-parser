@@ -1,7 +1,7 @@
-import { lighten } from 'polished';
-import React, { useRef, useState } from 'react';
-import styled from 'styled-components';
-import { colors } from '../utils';
+import { lighten } from 'polished'
+import { useRef, useState } from 'react'
+import styled from 'styled-components'
+import { colors } from '../utils'
 
 const Dialog = styled.dialog`
   position: relative;

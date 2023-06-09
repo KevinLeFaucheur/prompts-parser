@@ -12,10 +12,10 @@ const Wrapper = styled.div`
   margin-right: 5px;
 
   .widget__header {
+    cursor: pointer;
     display: flex;
     justify-content: space-between;
     width: 100%;
-    cursor: pointer;
   }
 
   i {
@@ -30,12 +30,12 @@ const Wrapper = styled.div`
   }
 
   .widget--close {
+    cursor: pointer;
+    background-color: transparent;
     width: 1.5rem;
     height: 1.5rem;
     border: none;
     border-radius: 2px;
-    background-color: transparent;
-    cursor: pointer;
     padding: 5px;
   }
 `
