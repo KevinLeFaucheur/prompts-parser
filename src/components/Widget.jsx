@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Swatch } from './Swatch';
 
@@ -69,27 +69,26 @@ const SwatchButton = styled.button`
 export const Widget = ({ promptData }) => {
   const [isOpen, setIsOpen] = useState();
   const [isSwatchOpen, setIsSwatchOpen] = useState();
-  const [categoryColor, setCategoryColor] = useState('#eee');
-
+  
   const colorRef = useRef('');
-
+  
   const { prompt, weight, color } = promptData;
-  const [weightInput, setWeightInput] = useState(weight);
+  const [promptInput, setPrompt] = useState(prompt);
+  const [weightInput, setWeight] = useState(weight);
+  const [colorInput, setColor] = useState(color);
 
   const handleIsOpen = () => {
     setIsOpen(!isOpen);
-    // setCategoryColor(value);
   }
 
-  const handleColor = (value) => {
-    setCategoryColor(value);
-  }
+  useEffect(() => {
+    setPrompt(prompt);
+    setWeight(weight);
+    setColor(color);
+  }, [color, prompt, weight])
 
   const handleWeight = (e) => {
-    const value = e.target.value;
-    let nonLinearWeight;
-    nonLinearWeight = (Math.pow(value, 2) / 10).toFixed(2);
-    setWeightInput(nonLinearWeight);
+    setWeight((Math.pow(e.target.value, 2) / 10).toFixed(2));
   }
 
   return (
@@ -97,7 +96,7 @@ export const Widget = ({ promptData }) => {
       <Container>
         <div className='widget__header' onClick={handleIsOpen}>
           <i className="fa-solid fa-angle-up" />
-          <p>{prompt}</p>
+          <p>{promptInput}</p>
           <button className="widget--close fa-solid fa-xmark" />
         </div>
         {isOpen ?
@@ -108,7 +107,7 @@ export const Widget = ({ promptData }) => {
           {/* <Option><p>Color:</p><input defaultValue={color} type="color" onBlur={(event) => handleColor(event.target.value)} /></Option> */}
         </div> : ''}
       </Container>
-      <Swatch colorRef={colorRef} open={isSwatchOpen} backgroundColor={color}/>
+      <Swatch colorRef={colorRef} open={isSwatchOpen} backgroundColor={colorInput}/>
     </Wrapper>
   )
 }

@@ -10,6 +10,9 @@ it('should return an array of prompt objects', () => {
 it('should parse a float number and calculate a weight', () => { 
   expect(promptParser('brown hair:0.5')).toStrictEqual([{ prompt:'brown hair', weight: 0.5, color: '#9FF' }]);
   expect(promptParser('brown hair:')).toStrictEqual([{ prompt:'brown hair', weight: 1, color: '#9FF' }]);
+  expect(promptParser('brown hair:.25')).toStrictEqual([{ prompt:'brown hair', weight: 0.25, color: '#9FF' }]);
+  expect(promptParser('brown hair:1.')).toStrictEqual([{ prompt:'brown hair', weight: 1, color: '#9FF' }]);
+  expect(promptParser('brown hair:.')).toStrictEqual([{ prompt:'brown hair', weight: 1, color: '#9FF' }]);
 });
 
 // Recognize parenthesis
@@ -28,5 +31,6 @@ it('should catch brackets and calculate a weight', () => {
  * validatePrompt, returns false when prompt is not valid
  */
 it('should catch empty keywords', () => { 
-
+  // expect(promptParser('')).toStrictEqual([{ prompt:'No keyword found.', weight: 1, color: '#9FF' }]);
+  // expect(promptParser('   ')).toStrictEqual([{ prompt:'hair', weight: 0.83, color: '#9FF' }]);
 });

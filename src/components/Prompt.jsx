@@ -18,8 +18,7 @@ export const Prompt = () => {
     const prompt = document.getElementById('positive').value;
 
     const promptList = promptParser(prompt);
-    promptList.forEach(keyword => keyword.color = randomColor())
-
+    promptList.forEach(keyword => keyword.color = randomColor());
     setPrompts(promptList);
   };
 
