@@ -5,15 +5,8 @@ export const promptParser = (prompts) => {
     let prompt = 'Error';
     let weight = 1;
     
-    let parenthesisCount = (keyword.match(/\(/g) || []).length; // match returns null with no result, || []
-    for (let i = 1; i <= parenthesisCount; i++) {
-      weight *= 1.1;
-    }
-    let bracketsCount = (keyword.match(/\[/g) || []).length;
-    for (let i = 1; i <= bracketsCount; i++) {
-      weight /= 1.1;
-    }
-
+    weight = calculateParenthesisWeight(keyword, weight);
+    weight = calculateBracketWeight(keyword, weight);
     keyword = keyword.replace(/(\()|(\))|(\[)|(\])/g, '');
 
     let weightedWord = keyword.split(':');
@@ -25,6 +18,22 @@ export const promptParser = (prompts) => {
 
     return { prompt: prompt, weight: weight, color: '#9FF' } 
   });
+}
+
+const calculateParenthesisWeight = (keyword, weight) => {
+  let count = (keyword.match(/\(/g) || []).length; // match returns null with no result, || []
+  for (let i = 1; i <= count; i++) {
+    weight *= 1.1;
+  }
+  return weight;
+}
+
+const calculateBracketWeight = (keyword, weight) => {
+  let count = (keyword.match(/\[/g) || []).length;
+  for (let i = 1; i <= count; i++) {
+    weight /= 1.1;
+  }
+  return weight;
 }
 
 export const validatePrompt = (prompt) => {

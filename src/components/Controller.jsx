@@ -1,22 +1,15 @@
 import { lighten } from 'polished'
-import { useContext, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { PromptContext } from '../App';
 import { validatePrompt } from '../utils';
+import { Swatch } from './Swatch';
 
 const Wrapper = styled.div`
   background-color: #95b9fc;
   border-radius: 5px;
-  padding: 10px;
+  padding: 10px 10%;
   margin-bottom: 1rem;
-  width: 50%;
-
-  button {
-    width: 100%;
-    padding: 5px 10px;
-    border: none;
-    background-color: ${lighten(0.1, '#95b9fc')};
-  }
 `
 
 const Header = styled.div`
@@ -26,6 +19,7 @@ const Header = styled.div`
 const ControllerRow = styled.div`
   display: flex;
   justify-content: space-between;
+  margin: 0.5rem 0;
 `
 
 const Label = styled.label`
@@ -33,6 +27,8 @@ const Label = styled.label`
 `
 
 const Prompt = styled.input`
+  border: none;
+  border-radius: 3px;
   width: 50%;
 `
 
@@ -40,30 +36,53 @@ const Weight = styled.input`
   width: 50%;
 `
 
-const Color = styled.input`
-  width: 50%;
+const Button = styled.button`
+  cursor: pointer;
+  width: 100%;
+  padding: 5px 10px;
+  border: none;
+  background-color: ${lighten(0.1, '#95b9fc')};
+  margin-top: 1rem;
+  &:hover {
+    background-color: ${lighten(0.05, '#95b9fc')};
+  }
 `
 
-const Button = styled.button`
-  margin-top: 1rem;
+const Option = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
+const SwatchButton = styled.button`
+  width: 2rem;
+  height: 2rem;
+  background-color: white;
+  border: none;
+  border-radius: 5px;
 `
 
 export const Controller = () => {
+  const [isSwatchOpen, setIsSwatchOpen] = useState();
+  const [weightInput, setWeight] = useState(1);
   const { prompts, setPrompts } = useContext(PromptContext);
   const promptRef = useRef('');
   const weightRef = useRef('');
   const colorRef = useRef('');
 
   const addWidget = () => {
+    if(validatePrompt(promptRef.current.value)) {
 
-    const newPrompts = [...prompts, 
-      validatePrompt({
-        prompt: promptRef.current.value, 
-        weight: weightRef.current.value, 
-        color: colorRef.current.value })
-    ];
-
-    setPrompts(newPrompts);
+      setPrompts([...prompts, {
+          prompt: promptRef.current.value, 
+          weight: weightRef.current.value, 
+          color: '#9EE'
+        }]
+      );
+    }
+  }
+  
+  const handleWeight = (e) => {
+    setWeight((Math.pow(e.target.value, 2) / 10).toFixed(2));
   }
 
   return (
@@ -75,15 +94,16 @@ export const Controller = () => {
           <Prompt type='text' ref={promptRef}/>
         </ControllerRow> 
         <ControllerRow>
-          <Label>Weight: </Label>
-          <Weight type="range" ref={weightRef} min={0} max={10} step={0.1} />
+          <Label>Weight: {weightInput}</Label>
+          <Weight onChange={handleWeight} ref={weightRef} defaultValue={3} type="range" min={0} max={10} step={0.1} />
         </ControllerRow>
         <ControllerRow>
           <Label>Color: </Label>
-          <Color type="color" ref={colorRef} />
+          <Option><SwatchButton onClick={() => setIsSwatchOpen(!isSwatchOpen)} /></Option>
         </ControllerRow>
         <Button onClick={() => addWidget()} >Add</Button>
       </div>
+      <Swatch colorRef={colorRef} open={isSwatchOpen} backgroundColor={'#95b9fc'}/>
     </Wrapper>
   )
 }
